@@ -395,6 +395,13 @@ Potential improvements include:
 * Audit logs for administrative changes.
 * More detailed room utilization reports.
 
+## 🚀 Live Demo
+
+**Try the application:** [Exam Management System](https://exam-management-system-theta.vercel.app/)
+
+Explore the deployed frontend for student registration and login, administrator access, exam scheduling, room management, and personalized exam timetables.
+
+
 ## Author
 
 **Samyak Khobragade**
