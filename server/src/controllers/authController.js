@@ -3,12 +3,15 @@ import { timingSafeEqual } from 'node:crypto';
 import jwt from 'jsonwebtoken';
 import User from '../models/User.js';
 
-const cookieOptions = {
-  httpOnly: true,
-  sameSite: 'lax',
-  secure: process.env.NODE_ENV === 'production',
-  maxAge: 24 * 60 * 60 * 1000
-};
+export function getCookieOptions(environment = process.env.NODE_ENV) {
+  const isProduction = environment === 'production';
+  return {
+    httpOnly: true,
+    sameSite: isProduction ? 'none' : 'lax',
+    secure: isProduction,
+    maxAge: 24 * 60 * 60 * 1000
+  };
+}
 
 function createToken(userId) {
   return jwt.sign({ userId }, process.env.JWT_SECRET, { expiresIn: '1d' });
@@ -73,7 +76,7 @@ export async function login(request, response, next) {
       return response.status(401).json({ message: 'Invalid email, password, or account type' });
     }
 
-    response.cookie('token', createToken(user.id), cookieOptions).json({
+    response.cookie('token', createToken(user.id), getCookieOptions()).json({
       user: { id: user.id, name: user.name, email: user.email, role: user.role, academicYear: user.academicYear, section: user.section }
     });
   } catch (error) {
@@ -82,7 +85,7 @@ export async function login(request, response, next) {
 }
 
 export function logout(_request, response) {
-  response.clearCookie('token', cookieOptions).json({ message: 'Logged out successfully' });
+  response.clearCookie('token', getCookieOptions()).json({ message: 'Logged out successfully' });
 }
 
 export function currentUser(request, response) {

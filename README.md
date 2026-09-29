@@ -326,7 +326,7 @@ Configure the production environment variables:
 * `MONGODB_URI`
 * `JWT_SECRET`
 * `ADMIN_SETUP_KEY`
-* `CLIENT_URL` — the deployed frontend origin
+* `CLIENT_URL=https://exam-management-system-theta.vercel.app` — use the exact frontend origin without a trailing slash
 
 Deploy the Express server to a Node.js-compatible hosting platform and ensure that the MongoDB database is accessible to it.
 
@@ -335,10 +335,28 @@ Deploy the Express server to a Node.js-compatible hosting platform and ensure th
 Configure the frontend build environment variable:
 
 ```dotenv
-VITE_API_BASE_URL=https://your-backend-domain.example
+VITE_API_BASE_URL=https://exam-management-api-m7xg.onrender.com
 ```
 
-Replace the example value with the actual deployed backend origin. Configure the frontend's allowed origin and cookie settings appropriately for the deployment.
+Set this variable in the Vercel project before building. The frontend already sends `credentials: 'include'` for API requests.
+
+### Render and Vercel settings
+
+For the Render backend service:
+
+* Root directory: `server`
+* Build command: `npm install`
+* Start command: `npm start`
+* Environment variables: `NODE_ENV=production`, `MONGODB_URI`, `JWT_SECRET`, `ADMIN_SETUP_KEY`, and `CLIENT_URL=https://exam-management-system-theta.vercel.app`
+
+For the Vercel frontend project:
+
+* Root directory: `client`
+* Build command: `npm run build`
+* Output directory: `dist`
+* Environment variable: `VITE_API_BASE_URL=https://exam-management-api-m7xg.onrender.com`
+
+Production authentication uses an HTTP-only JWT cookie with `SameSite=None` and `Secure`. Both deployed services must use HTTPS, and the backend must allow the exact Vercel origin above.
 
 Build the production frontend:
 
