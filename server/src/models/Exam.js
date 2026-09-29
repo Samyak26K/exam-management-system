@@ -9,7 +9,8 @@ const examSchema = new mongoose.Schema(
     examDate: { type: String, required: true },
     startTime: { type: String, required: true },
     endTime: { type: String, required: true },
-    venue: { type: String, required: true, trim: true, maxlength: 100 }
+    venue: { type: String, required: true, trim: true, maxlength: 100 },
+    room: { type: mongoose.Schema.Types.ObjectId, ref: 'Room', required: true }
   },
   { timestamps: true }
 );

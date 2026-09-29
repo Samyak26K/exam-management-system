@@ -3,6 +3,7 @@ import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import authRoutes from './routes/authRoutes.js';
 import examRoutes from './routes/examRoutes.js';
+import roomRoutes from './routes/roomRoutes.js';
 import { errorHandler } from './middleware/errorHandler.js';
 
 const app = express();
@@ -17,6 +18,7 @@ app.get('/api/health', (_request, response) => {
 
 app.use('/api/auth', authRoutes);
 app.use('/api/exams', examRoutes);
+app.use('/api/rooms', roomRoutes);
 app.use(errorHandler);
 
 export default app;

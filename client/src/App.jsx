@@ -8,7 +8,7 @@ function Home() {
   const { user, loading } = useAuth();
   if (loading) return <main className="center-message">Loading...</main>;
   if (user) return <Navigate to={`/${user.role}/dashboard`} replace />;
-  return <main className="landing-page"><section className="landing-panel"><p className="eyebrow">B1 Software Engineering Assessment</p><h1>Exam Management System</h1><p className="intro">A clear place for students and administrators to manage exam timetables.</p><div className="landing-actions"><Link className="button button-primary" to="/student/login">Student login</Link><Link className="button button-secondary" to="/admin/login">Admin login</Link></div><p className="landing-links"><Link to="/student/register">Create student account</Link> <Link to="/admin/register">Provision admin account</Link></p></section></main>;
+  return <main className="landing-page"><section className="landing-panel"><Link className="home-logo" to="/"><span className="brand-mark">EF</span><span>ExamFlow</span></Link><p className="eyebrow">Campus examination portal</p><h1>Your exams, organized.</h1><p className="intro">Students can view exam schedules and room assignments while administrators manage exams, rooms, and capacity from one focused workspace.</p><div className="landing-actions"><Link className="button button-primary" to="/student/login">Student login</Link><Link className="button button-secondary" to="/admin/login">Admin login</Link></div><p className="landing-links"><Link to="/student/register">Create student account</Link> <Link to="/admin/register">Authorized admin provisioning</Link></p></section></main>;
 }
 
 export default function App() {

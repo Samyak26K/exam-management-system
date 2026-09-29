@@ -8,6 +8,7 @@ B1 Software Engineering assessment application built with React, Vite, Express, 
 - Secure bcrypt password hashing and HTTP-only JWT session cookies
 - Server-side role authorization
 - Admin exam timetable management
+- Admin room management with capacity and clash validation
 - Student exam list restricted to the student's academic year and section
 
 ## Requirements
@@ -58,6 +59,9 @@ Public users cannot create an administrator without the private `ADMIN_SETUP_KEY
 - `GET /api/auth/me` returns the current authenticated user.
 - `GET /api/exams` returns all exams for admins, or only the authenticated student's academic year and section.
 - `POST`, `PUT /:id`, and `DELETE /:id` on `/api/exams` are restricted to admins.
+- `GET`, `POST`, `PUT /:id`, and `DELETE /:id` on `/api/rooms` are restricted to admins.
+
+Exam creation and updates require a valid room. The server derives attendance from registered students in the exam's academic year and section, rejects rooms with insufficient capacity, and rejects overlapping bookings for the same room and date. A room assigned to an exam cannot be deleted.
 
 ## Test accounts
 
@@ -65,4 +69,4 @@ No real credentials are stored in this repository. Create a student account thro
 
 ## Deployment notes
 
-Set production values for `MONGODB_URI`, `JWT_SECRET`, `ADMIN_SETUP_KEY`, `CLIENT_URL`, and `NODE_ENV=production`. Build the client with `npm run build` inside `client`, serve the generated `client/dist` through your chosen static host, and deploy the `server` process separately.
+Set production values for `MONGODB_URI`, `JWT_SECRET`, `ADMIN_SETUP_KEY`, `CLIENT_URL`, and `NODE_ENV=production`. For a separately hosted frontend, set `VITE_API_BASE_URL` in the client build environment to the backend origin. Build the client with `npm run build` inside `client`, serve the generated `client/dist` through your chosen static host, and deploy the `server` process separately.
